@@ -41,8 +41,8 @@ pipeline {
         }
         stage('Push image to Docker') {
             steps{
-                withCredentials([string(credentialsId: 'dockersecret', variable: 'TOKEN')]) {
-                    sh 'docker login -u jayakrishnanm -p $TOKEN'
+                withCredentials([string(credentialsId: 'dockerhub-credentials', variable: 'PASSWORD')]) {
+                    sh 'docker login -u jayakrishnanm -p $PASSWORD'
                     sh 'docker push ' + dockerImageTag    
                 }
             }

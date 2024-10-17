@@ -32,9 +32,9 @@ pipeline {
                 script{
                     sh 'docker --version'
                     def commitSha = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-                    def dockerImageTag = "gcr.io/playground-s-11-1982ae45/my-app:${commitSha}"
+                    def dockerImageTag = "gcr.io/playground-s-11-de848d3b/my-app:${commitSha}"
                     sh 'docker build -t ' + dockerImageTag + ' .'
-                //  sh 'docker build -t gcr.io/playground-s-11-1982ae45/my-app:latest .'
+                //  sh 'docker build -t gcr.io/playground-s-11-de848d3b/my-app:latest .'
                 }
             }
         }

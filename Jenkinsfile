@@ -7,8 +7,8 @@ pipeline {
         skipStagesAfterUnstable()
     }
     enviroment {
-        def commitSha = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-        def dockerImageTag = "jayakrishnanm/my-app:${commitSha}"
+        commitSha = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
+        dockerImageTag = "jayakrishnanm/my-app:${commitSha}"
     }
     stages {
         stage('Build') {

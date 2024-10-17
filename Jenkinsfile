@@ -38,5 +38,16 @@ pipeline {
                 }
             }
         }
+        stage('Push Docker Image to Artifact Registry') {
+            steps {
+                script {
+                    // Authenticate Docker with Google Cloud
+                    sh 'gcloud auth configure-docker'
+
+                    // Push the previously built Docker image
+                    sh "docker push ${dockerImageTag}"
+                }
+            }
+        }
     }
 }

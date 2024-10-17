@@ -2,7 +2,6 @@ pipeline {
     agent any
     tools {
         maven "maven-tool"
-        dockerTool "docker-tool"
     }
     options {
         skipStagesAfterUnstable()
@@ -31,7 +30,6 @@ pipeline {
         stage('Build docker image') {
             steps {
                 sh 'docker --version'
-                sh 'sudo dockerd'
                 sh 'docker build -t gcr.io/playground-s-11-1982ae45/my-app:latest .'
             }
         }

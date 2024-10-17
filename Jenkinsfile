@@ -27,5 +27,11 @@ pipeline {
                 sh './jenkins/scripts/deliver.sh' 
             }
         }
+        stage('Build docker image') {
+            steps {
+                sh 'docker --version'
+                sh 'docker build -t gcr.io/playground-s-11-1982ae45/my-app:latest .'
+            }
+        }
     }
 }

@@ -6,7 +6,7 @@ pipeline {
     options {
         skipStagesAfterUnstable()
     }
-    enviroment {
+    environment {
         commitSha = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
         dockerImageTag = "jayakrishnanm/my-app:${commitSha}"
     }

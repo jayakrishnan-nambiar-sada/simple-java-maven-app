@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
         maven "maven-tool"
-        docker "docker-tool"
+        dockerTool "docker-tool"
     }
     options {
         skipStagesAfterUnstable()

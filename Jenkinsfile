@@ -53,8 +53,14 @@ pipeline {
         }
         stage('Deploy to GKE') {
             steps{
-                sh "sed -i 's/tag/${env.BUILD_ID}/g' deployment.yaml"
-                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', verifyDeployments: true])
+              //  sh "sed -i 's/tag/${env.BUILD_ID}/g' deployment.yaml"
+              //  step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', verifyDeployments: true])
+                sh """
+                gcloud container clusters get-credentials ${CLUSTER_NAME} \
+                --zone ${LOCATION} --project ${PROJECT_ID}
+                """
+                sh 'kubectl apply -f myapp.yaml'
+                sh 'kubectl rollout status deployment/my-app'
 		        echo "Deployment Finished ..."
             }
         }

@@ -10,9 +10,9 @@ pipeline {
         commitSha = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
         dockerImageTag = "jayakrishnanm/my-app:${commitSha}"
         PROJECT_ID = 'playground-s-11-af7a7a0c'
-        CLUSTER_NAME = 'jenkins-vm'
+        CLUSTER_NAME = 'jenkins-gke'
         LOCATION = 'us-central1-a'
-        CREDENTIALS_ID = 'jenkins-gke'
+        CREDENTIALS_ID = 'jsonkey'
     }
     stages {
         stage('Build') {
@@ -39,7 +39,7 @@ pipeline {
             steps {
                 script{
                     sh 'docker --version'
-                    sh 'docker build -t jayakrishnanm/my-app:v1 .'
+                    sh 'docker build -t jayakrishnanm/my-app:${env.BUILD_ID} .'
                 }
             }
         }
@@ -47,7 +47,7 @@ pipeline {
             steps{
                 withCredentials([string(credentialsId: 'dockerhub-pat', variable: 'PASSWORD')]) {
                     sh 'docker login -u jayakrishnanm -p $PASSWORD'
-                    sh 'docker push jayakrishnanm/my-app:v1 '  
+                    sh 'docker push jayakrishnanm/my-app:${env.BUILD_ID} '  
                 }
             }
         }

@@ -9,8 +9,8 @@ pipeline {
     environment {
         commitSha = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
         dockerImageTag = "jayakrishnanm/my-app:${commitSha}"
-        PROJECT_ID = 'playground-s-11-d11d6293'
-        CLUSTER_NAME = 'jenkins-gke'
+        PROJECT_ID = 'playground-s-11-af7a7a0c'
+        CLUSTER_NAME = 'jenkins-vm'
         LOCATION = 'us-central1-a'
         CREDENTIALS_ID = 'jenkins-gke'
     }

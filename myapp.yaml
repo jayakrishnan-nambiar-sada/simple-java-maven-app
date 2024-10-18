@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: jayakrishnanm/my-app:v1
+        image: jayakrishnanm/my-app:{BUILD_NUMBER}
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

@@ -51,6 +51,11 @@ pipeline {
                 }
             }
         }
+        stage('Prepare deployment file') {
+            steps{
+                sh 'envsubst < myapp.yaml.template > myapp.yaml'
+            }
+        }
         stage('Deploy to GKE') {
             steps{
                 step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'myapp.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])

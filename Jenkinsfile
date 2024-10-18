@@ -39,7 +39,7 @@ pipeline {
             steps {
                 script{
                     sh 'docker --version'
-                    sh 'docker build -t jayakrishnanm/my-app:${env.BUILD_ID} .'
+                    sh 'docker build -t jayakrishnanm/my-app:v1 .'
                 }
             }
         }
@@ -47,7 +47,7 @@ pipeline {
             steps{
                 withCredentials([string(credentialsId: 'dockerhub-pat', variable: 'PASSWORD')]) {
                     sh 'docker login -u jayakrishnanm -p $PASSWORD'
-                    sh 'docker push jayakrishnanm/my-app:${env.BUILD_ID} '  
+                    sh 'docker push jayakrishnanm/my-app:v1 '  
                 }
             }
         }

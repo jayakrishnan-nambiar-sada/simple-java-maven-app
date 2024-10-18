@@ -8,10 +8,10 @@ pipeline {
     }
     environment {
         dockerImageTag = "jayakrishnanm/my-app:${env.BUILD_ID}"
-        PROJECT_ID = 'playground-s-11-af7a7a0c'
+        PROJECT_ID = 'playground-s-11-57ae4e23'
         CLUSTER_NAME = 'jenkins-gke'
         LOCATION = 'us-central1-a'
-        CREDENTIALS_ID = 'jsonkey'
+        CREDENTIALS_ID = 'playground-key'
     }
     stages {
         stage('Build') {

@@ -7,8 +7,7 @@ pipeline {
         skipStagesAfterUnstable()
     }
     environment {
-        commitSha = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-        dockerImageTag = "jayakrishnanm/my-app:${commitSha}"
+        dockerImageTag = "jayakrishnanm/my-app:${env.BUILD_ID}"
         PROJECT_ID = 'playground-s-11-af7a7a0c'
         CLUSTER_NAME = 'jenkins-gke'
         LOCATION = 'us-central1-a'
@@ -39,7 +38,8 @@ pipeline {
             steps {
                 script{
                     sh 'docker --version'
-                    sh 'docker build -t jayakrishnanm/my-app:v1 .'
+                    //sh 'docker build -t jayakrishnanm/my-app:v1 .'
+                    sh "docker build -t ${dockerImageTag} ."
                 }
             }
         }
@@ -47,7 +47,9 @@ pipeline {
             steps{
                 withCredentials([string(credentialsId: 'dockerhub-pat', variable: 'PASSWORD')]) {
                     sh 'docker login -u jayakrishnanm -p $PASSWORD'
-                    sh 'docker push jayakrishnanm/my-app:v1 '  
+                    //sh 'docker push jayakrishnanm/my-app:v1 '  
+                    sh "docker push ${dockerImageTag}"
+                    
                 }
             }
         }

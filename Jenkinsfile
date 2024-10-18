@@ -38,7 +38,6 @@ pipeline {
             steps {
                 script{
                     sh 'docker --version'
-                    //sh 'docker build -t jayakrishnanm/my-app:v1 .'
                     sh "docker build -t ${dockerImageTag} ."
                 }
             }
@@ -46,8 +45,7 @@ pipeline {
         stage('Push image to Docker') {
             steps{
                 withCredentials([string(credentialsId: 'dockerhub-pat', variable: 'PASSWORD')]) {
-                    sh 'docker login -u jayakrishnanm -p $PASSWORD'
-                    //sh 'docker push jayakrishnanm/my-app:v1 '  
+                    sh 'docker login -u jayakrishnanm -p $PASSWORD' 
                     sh "docker push ${dockerImageTag}"
                     
                 }

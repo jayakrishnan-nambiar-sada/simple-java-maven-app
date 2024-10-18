@@ -53,7 +53,7 @@ pipeline {
         }
         stage('Prepare deployment file') {
             steps{
-                sh 'envsubst < myapp.yaml.template > myapp.yaml'
+                sh 'envsubst < myapp.yaml.'
             }
         }
         stage('Deploy to GKE') {

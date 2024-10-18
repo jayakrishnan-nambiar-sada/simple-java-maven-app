@@ -51,13 +51,9 @@ pipeline {
                 }
             }
         }
-        stage('Prepare deployment file') {
-            steps{
-                sh 'envsubst < myapp.yaml.'
-            }
-        }
         stage('Deploy to GKE') {
             steps{
+                sh "sed -i 's/tagversion/${env.BUILD_ID}/g' deployment.yaml"
                 step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'myapp.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
 		        echo "Deployment Finished ..."
             }

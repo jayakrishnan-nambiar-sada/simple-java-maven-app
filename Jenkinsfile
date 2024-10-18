@@ -8,9 +8,9 @@ pipeline {
     }
     environment {
         dockerImageTag = "jayakrishnanm/my-app:${env.BUILD_ID}"
-        PROJECT_ID = 'playground-s-11-57ae4e23'
-        CLUSTER_NAME = 'jenkins-gke'
-        LOCATION = 'us-central1-a'
+        PROJECT_ID = 'sadaindia-poc-infra-1700'
+        CLUSTER_NAME = 'sada-tu-poc-gke-1'
+        LOCATION = 'us-central1-c'
         CREDENTIALS_ID = 'playground-key'
     }
     stages {
@@ -53,8 +53,8 @@ pipeline {
         }
         stage('Deploy to GKE') {
             steps{
-                sh "sed -i 's/tagversion/${env.BUILD_ID}/g' deployment.yaml"
-                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'myapp.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+                sh 'sed -i 's/tag/${env.BUILD_ID}/g' deployment.yaml'
+                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', verifyDeployments: true])
 		        echo "Deployment Finished ..."
             }
         }

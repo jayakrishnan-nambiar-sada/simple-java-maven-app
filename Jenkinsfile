@@ -57,7 +57,7 @@ pipeline {
               //  step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', verifyDeployments: true])
                 sh """
                 gcloud container clusters get-credentials ${CLUSTER_NAME} \
-                --zone ${LOCATION} --project ${PROJECT_ID}
+                --zone ${LOCATION} --project ${PROJECT_ID} --internal-ip
                 """
                 sh 'kubectl apply -f deployment.yaml'
                 sh 'kubectl rollout status deployment/my-app'

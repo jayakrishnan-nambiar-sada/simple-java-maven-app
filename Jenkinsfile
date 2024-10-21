@@ -59,6 +59,7 @@ pipeline {
                 gcloud container clusters get-credentials ${CLUSTER_NAME} \
                 --zone ${LOCATION} --project ${PROJECT_ID} --internal-ip
                 """
+                sh "sed -i 's/tag/${env.BUILD_ID}/g' deployment.yaml"
                 sh 'kubectl apply -f deployment.yaml'
                 sh 'kubectl rollout status deployment/my-app'
 		        echo "Deployment Finished ..."
